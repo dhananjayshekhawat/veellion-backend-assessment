@@ -1,3 +1,4 @@
+
 import type { Task } from "@/types/api";
 
 type TaskItemProps = {
@@ -9,19 +10,21 @@ type TaskItemProps = {
 export function TaskItem({ task, busy, onToggle }: TaskItemProps) {
   return (
     <li
-      className="card"
-      style={{
-        padding: "0.85rem",
-        display: "grid",
-        gap: "0.4rem",
-      }}
+      className="card task-item"
     >
-      <div style={{ display: "flex", justifyContent: "space-between", gap: "0.8rem", alignItems: "start" }}>
-        <p style={{ margin: 0, fontWeight: 600 }}>{task.title}</p>
-        <span className="badge">{task.completed ? "Completed" : "Pending"}</span>
+      <div className="task-item-header">
+        <p className="task-title">{task.title}</p>
+
+        <span
+          className={`badge ${
+            task.completed ? "badge-completed" : "badge-pending"
+          }`}
+        >
+          {task.completed ? "Completed" : "Pending"}
+        </span>
       </div>
 
-      <small style={{ color: "var(--muted)" }}>
+      <small className="task-updated">
         Updated: {new Date(task.updatedAt).toLocaleString()}
       </small>
 
@@ -31,9 +34,15 @@ export function TaskItem({ task, busy, onToggle }: TaskItemProps) {
           className="button"
           onClick={() => onToggle(task)}
           disabled={busy}
-          aria-label={`Mark ${task.title} as ${task.completed ? "pending" : "completed"}`}
+          aria-label={`Mark ${task.title} as ${
+            task.completed ? "pending" : "completed"
+          }`}
         >
-          {busy ? "Saving..." : task.completed ? "Mark as Pending" : "Mark as Completed"}
+          {busy
+            ? "Saving..."
+            : task.completed
+              ? "Mark as Pending"
+              : "Mark as Completed"}
         </button>
       </div>
     </li>
