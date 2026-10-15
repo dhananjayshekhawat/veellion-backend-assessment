@@ -1,13 +1,21 @@
 const aSvc = require("../services/activity.service");
 
-function get_activity(req, res) {
-  const x = aSvc.getAllActivity();
-  res.json(x);
+async function get_activity(req, res, next) {
+  try {
+    const x = await aSvc.getAllActivity();
+    res.json(x);
+  } catch (error) {
+    next(error);
+  }
 }
 
-async function addActivity(req, res) {
-  const activity = await aSvc.createNewActivity(req.body);
-  res.status(201).json(activity);
+async function addActivity(req, res, next) {
+  try {
+    const activity = await aSvc.createNewActivity(req.body);
+    res.status(201).json(activity);
+  } catch (error) {
+    next(error);
+  }
 }
 
 module.exports = {
